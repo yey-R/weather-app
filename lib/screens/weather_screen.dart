@@ -113,7 +113,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                     CurrentInfo(
                       imageName: 'temp',
                       title: 'FEELS LIKE',
-                      value: '$feelsLike',
+                      value: '$feelsLike°C',
                     ),
                   ],
                 ),
