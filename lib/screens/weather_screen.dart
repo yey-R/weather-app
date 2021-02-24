@@ -4,11 +4,40 @@ import 'package:weather_app/widgets/bottom_button.dart';
 import 'package:weather_app/widgets/current_info.dart';
 
 class WeatherScreen extends StatefulWidget {
+  final data;
+  WeatherScreen({this.data});
   @override
   _WeatherScreenState createState() => _WeatherScreenState();
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
+  String cityName;
+  String description;
+  String wind;
+  String temperature;
+  String feelsLike;
+  String humidity;
+  String indexUV;
+  @override
+  void initState() {
+    super.initState();
+    update(widget.data);
+  }
+
+  void update(dynamic data) {
+    setState(() {
+      cityName = data['city']['name'].toString().toUpperCase();
+      description = data['list'][0]['weather'][0]['main'];
+      double temp = data['list'][0]['wind']['speed'];
+      wind = temp.toStringAsFixed(0);
+      temp = data['list'][0]['main']['temp'];
+      temperature = temp.toStringAsFixed(0);
+      temp = data['list'][0]['main']['feels_like'];
+      feelsLike = temp.toStringAsFixed(0);
+      humidity = data['list'][0]['main']['humidity'].toString();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +47,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
         backgroundColor: Colors.white,
         centerTitle: true,
         title: Text(
-          'Ankara',
+          '$cityName',
           style: TextStyle(color: Colors.black),
         ),
         actions: <Widget>[
@@ -48,11 +77,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Text(
-            'Rain',
+            '$description',
             style: TextStyle(fontSize: 50.0, fontWeight: FontWeight.bold),
           ),
           Text(
-            '22°C',
+            '$temperature°C',
             style: TextStyle(fontSize: 30.0),
           ),
           Image.asset('images/rainy_day_0.png'),
@@ -78,13 +107,13 @@ class _WeatherScreenState extends State<WeatherScreen> {
                     CurrentInfo(
                       imageName: 'wind',
                       title: 'WIND',
-                      value: '19.2km/h',
+                      value: '$wind km/h',
                     ),
                     verticalLine,
                     CurrentInfo(
                       imageName: 'temp',
                       title: 'FEELS LIKE',
-                      value: '22',
+                      value: '$feelsLike',
                     ),
                   ],
                 ),
@@ -100,7 +129,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                     CurrentInfo(
                       imageName: 'humidity',
                       title: 'HUMIDITY',
-                      value: '35%',
+                      value: '$humidity%',
                     ),
                   ],
                 ),
