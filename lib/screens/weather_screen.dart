@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:weather_app/screens/contributor_screen.dart';
 import 'package:weather_app/utilities/const.dart';
 import 'package:weather_app/widgets/bottom_button.dart';
 import 'package:weather_app/widgets/current_info.dart';
@@ -50,10 +52,21 @@ class _WeatherScreenState extends State<WeatherScreen> {
         ),
         actions: <Widget>[
           FlatButton(
-            onPressed: null,
-            child: Icon(Icons.attach_money_sharp),
-            color: Colors.black,
-          )
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return ContributorScreen();
+                  },
+                ),
+              );
+            },
+            child: Icon(
+              FontAwesomeIcons.code,
+              color: Colors.black,
+            ),
+          ),
         ],
         leading: Builder(
           builder: (BuildContext context) {
