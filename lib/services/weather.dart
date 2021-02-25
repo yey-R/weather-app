@@ -1,7 +1,7 @@
 import 'network.dart';
 import 'location.dart';
 
-const apiKey = '32eda22260038fe087e2d8cb7f40b32c';
+const apiKey = '{API KEY}';
 const openWeatherURL = 'https://api.openweathermap.org/data/2.5/forecast';
 
 class Weather {
