@@ -1,7 +1,7 @@
 import 'network.dart';
 import 'location.dart';
 
-const apiKey = '{API KEY}';
+const apiKey = '32eda22260038fe087e2d8cb7f40b32c';
 const openWeatherURL = 'https://api.openweathermap.org/data/2.5/forecast';
 
 class Weather {
@@ -14,6 +14,8 @@ class Weather {
   Future<dynamic> getWeatherData() async {
     Location location = Location();
     await location.getCurrentLocation();
+    print(
+        '$openWeatherURL?lat=${location.latitude}&lon=${location.longitude}&appid=$apiKey&units=metric');
     Network networkHelper = Network(
         url:
             '$openWeatherURL?lat=${location.latitude}&lon=${location.longitude}&appid=$apiKey&units=metric');

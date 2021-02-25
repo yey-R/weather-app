@@ -28,12 +28,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
     setState(() {
       cityName = data['city']['name'].toString().toUpperCase();
       description = data['list'][0]['weather'][0]['main'];
-      double temp = data['list'][0]['wind']['speed'];
-      wind = temp.toStringAsFixed(0);
-      temp = data['list'][0]['main']['temp'];
-      temperature = temp.toStringAsFixed(0);
-      temp = data['list'][0]['main']['feels_like'];
-      feelsLike = temp.toStringAsFixed(0);
+      wind = data['list'][0]['wind']['speed'].toStringAsFixed(0);
+      temperature = data['list'][0]['main']['temp'].toStringAsFixed(0);
+      feelsLike = data['list'][0]['main']['feels_like'].toStringAsFixed(0);
       humidity = data['list'][0]['main']['humidity'].toString();
     });
   }
@@ -43,6 +40,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        toolbarHeight: 56.0,
         elevation: 0,
         backgroundColor: Colors.white,
         centerTitle: true,
@@ -73,70 +71,80 @@ class _WeatherScreenState extends State<WeatherScreen> {
         ),
       ),
       resizeToAvoidBottomInset: false,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Text(
-            '$description',
-            style: TextStyle(fontSize: 50.0, fontWeight: FontWeight.bold),
-          ),
-          Text(
-            '$temperature°C',
-            style: TextStyle(fontSize: 30.0),
-          ),
-          Image.asset('images/rainy_day_0.png'),
+      body: ListView(
+        children: [
           Container(
-            margin: EdgeInsets.only(left: 13, right: 13),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(30.0)),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.5),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: Offset(0, 1),
-                )
-              ],
-            ),
+            height: 764.0,
+            width: MediaQuery.of(context).size.width,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    CurrentInfo(
-                      imageName: 'wind',
-                      title: 'WIND',
-                      value: '$wind km/h',
-                    ),
-                    verticalLine,
-                    CurrentInfo(
-                      imageName: 'temp',
-                      title: 'FEELS LIKE',
-                      value: '$feelsLike°C',
-                    ),
-                  ],
+                Text(
+                  '\t$description',
+                  style: TextStyle(fontSize: 50.0, fontWeight: FontWeight.bold),
                 ),
-                horizontalLine,
-                Row(
-                  children: <Widget>[
-                    CurrentInfo(
-                      imageName: 'index_uv',
-                      title: 'INDEX UV',
-                      value: '2',
-                    ),
-                    verticalLine,
-                    CurrentInfo(
-                      imageName: 'humidity',
-                      title: 'HUMIDITY',
-                      value: '$humidity%',
-                    ),
-                  ],
+                Text(
+                  '\t\t$temperature°C',
+                  style: TextStyle(fontSize: 30.0),
                 ),
+                Image.asset(
+                  'images/rainy_day_0.png',
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 13, right: 13),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 1),
+                      )
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          CurrentInfo(
+                            imageName: 'wind',
+                            title: 'WIND',
+                            value: '$wind km/h',
+                          ),
+                          verticalLine,
+                          CurrentInfo(
+                            imageName: 'temp',
+                            title: 'FEELS LIKE',
+                            value: '$feelsLike°C',
+                          ),
+                        ],
+                      ),
+                      horizontalLine,
+                      Row(
+                        children: <Widget>[
+                          CurrentInfo(
+                            imageName: 'index_uv',
+                            title: 'INDEX UV',
+                            value: '2',
+                          ),
+                          verticalLine,
+                          CurrentInfo(
+                            imageName: 'humidity',
+                            title: 'HUMIDITY',
+                            value: '$humidity%',
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                BottomButton(),
               ],
             ),
           ),
-          BottomButton(),
         ],
       ),
     );
