@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class Box extends StatelessWidget {
+class CustomBox extends StatelessWidget {
   final String title;
   final String icon;
   final String value;
   final String unit;
 
-  Box({
+  CustomBox({
     @required this.title,
     @required this.icon,
     @required this.value,

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:app_design/models/daily_info.dart';
 import 'package:app_design/utilities/constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:app_design/widgets/box.dart';
+import 'package:app_design/widgets/custom_box_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:app_design/widgets/search_box.dart';
 import 'package:app_design/widgets/custom_drawer.dart';
@@ -17,9 +17,9 @@ class CustomInfoScreen extends StatefulWidget {
 
   CustomInfoScreen({
     @required this.foreCastData,
-    @required this.oneCallData,
-    @required this.currentData,
     @required this.userPref,
+    this.oneCallData,
+    this.currentData,
   });
 
   @override
@@ -59,6 +59,7 @@ class _CustomInfoScreenState extends State<CustomInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       endDrawer: CustomDrawer(
         context: context,
         userPref: widget.userPref,
@@ -117,65 +118,9 @@ class _CustomInfoScreenState extends State<CustomInfoScreen> {
               ],
             ),
           ),
-          Positioned(
-            top: 280.0,
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height - 280,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(35.0),
-                  topRight: Radius.circular(35.0),
-                ),
-                color: Color(0xFFd3d7e1),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Row(
-                    children: [
-                      Box(
-                        icon: 'temp',
-                        title: 'Temperature',
-                        value: '${info.temp}',
-                        unit: widget.userPref.getBool('metric') ? '°C' : '°F',
-                      ),
-                      Box(
-                        icon: info.temp > info.feelsLike
-                            ? 'temp_decrease'
-                            : 'temp_increase',
-                        title: 'Feels Like',
-                        value: '${info.feelsLike}',
-                        unit: widget.userPref.getBool('metric') ? '°C' : '°F',
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Row(
-                    children: [
-                      Box(
-                        icon: 'wind',
-                        title: 'Wind',
-                        value: '${info.windSpeed}',
-                        unit:
-                            widget.userPref.getBool('metric') ? 'km/h' : 'mph',
-                      ),
-                      Box(
-                        icon: 'humidity',
-                        title: 'Humidity',
-                        value: '${info.humidity}',
-                        unit: '%',
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+          CustomBoxInfo(
+            userPref: widget.userPref,
+            info: info,
           ),
           Container(),
           dailyInfo,
